@@ -1,5 +1,7 @@
 package lectura;
 
+import java.time.LocalDateTime;
+
 public class Lectura {
     private String numContador;
     private LocalDateTime fechaContador;
