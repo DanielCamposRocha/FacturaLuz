@@ -1,0 +1,1 @@
+La idea de este proyecto es crear un pequeño programa que se encargue de leer las lecturas del contador inteligente de eléctrico y calcule el costo de la energía para un periodo dado así como que pueda calcular a partir de esos datos distintos valores útiles para la gestión del consumo
