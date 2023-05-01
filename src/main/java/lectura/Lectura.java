@@ -2,15 +2,13 @@ package lectura;
 
 public class Lectura {
     private String numContador;
-    private String fechaContador;
-    private Double hora;
+    private LocalDateTime fechaContador;
     private Double consumo;
     private String metodoObtencion;
 
-    public Lectura(String numContador, String fechaContador, Double hora, Double consumo, String metodoObtencion) {
+    public Lectura(String numContador, LocalDateTime fechaContador, Double consumo, String metodoObtencion) {
         this.numContador = numContador;
         this.fechaContador = fechaContador;
-        this.hora = hora;
         this.consumo = consumo;
         this.metodoObtencion = metodoObtencion;
     }
@@ -23,20 +21,12 @@ public class Lectura {
         this.numContador = numContador;
     }
 
-    public String getFechaContador() {
+    public LocalDateTime getFechaContador() {
         return fechaContador;
     }
 
-    public void setFechaContador(String fechaContador) {
+    public void setFechaContador(LocalDateTime fechaContador) {
         this.fechaContador = fechaContador;
-    }
-
-    public Double getHora() {
-        return hora;
-    }
-
-    public void setHora(Double hora) {
-        this.hora = hora;
     }
 
     public Double getConsumo() {
@@ -57,6 +47,6 @@ public class Lectura {
 
     @Override
     public String toString() {
-        return numContador +" "+fechaContador + " " +hora+" "+ consumo +" "+ metodoObtencion ;
+        return numContador +" "+fechaContador + " " + consumo +" "+ metodoObtencion ;
     }
 }
