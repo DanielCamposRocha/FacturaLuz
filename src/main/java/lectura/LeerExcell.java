@@ -7,6 +7,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -18,7 +19,57 @@ public class LeerExcell {
         leerExcell();
         calcularMedia();
         mediaFiltradaAnho();
+mediaFiltradaSemana();
+    }
 
+    private static void mediaFiltradaSemana() {
+        ArrayList <Lectura> listaLunes=new ArrayList<>();
+        ArrayList <Lectura> listaMartes=new ArrayList<>();
+        ArrayList <Lectura> listaMiercoles=new ArrayList<>();
+        ArrayList <Lectura> listaJueves=new ArrayList<>();
+        ArrayList <Lectura> listaViernes=new ArrayList<>();
+        ArrayList <Lectura> listaSabado=new ArrayList<>();
+        ArrayList <Lectura> listaDomingo=new ArrayList<>();
+        double consumoLunes=0;
+        double consumoMartes=0;
+        double consumoMiercoles=0;
+        double consumoJueves=0;
+        double consumoViernes=0;
+        double consumoSabado=0;
+        double consumoDomingo=0;
+        for (Lectura lectura:listaLecturas
+        ) {
+            if(lectura.getFechaContador().getDayOfWeek()== DayOfWeek.MONDAY){
+                listaLunes.add(lectura);
+                consumoLunes+=lectura.getConsumo();}
+            if(lectura.getFechaContador().getDayOfWeek()==DayOfWeek.TUESDAY){
+                listaMartes.add(lectura);
+                consumoMartes+=lectura.getConsumo();}
+            if(lectura.getFechaContador().getDayOfWeek()==DayOfWeek.WEDNESDAY){
+                listaMiercoles.add(lectura);
+                consumoMiercoles+=lectura.getConsumo();}
+            if(lectura.getFechaContador().getDayOfWeek()==DayOfWeek.THURSDAY){
+                listaJueves.add(lectura);
+                consumoJueves+=lectura.getConsumo();}
+            if(lectura.getFechaContador().getDayOfWeek()==DayOfWeek.FRIDAY){
+                listaViernes.add(lectura);
+                consumoViernes+=lectura.getConsumo();}
+            if(lectura.getFechaContador().getDayOfWeek()==DayOfWeek.SATURDAY){
+                listaSabado.add(lectura);
+                consumoSabado+=lectura.getConsumo();}
+            if(lectura.getFechaContador().getDayOfWeek()==DayOfWeek.SUNDAY){
+                listaDomingo.add(lectura);
+                consumoDomingo+=lectura.getConsumo();}
+        }
+        System.out.println();
+        System.out.println("Por lo que el consumo medio en Lunes ha sido de: "+(consumoLunes/ listaLunes.size())+" kw/h");
+        mediaFiltradaHora(listaLunes);
+        System.out.println();
+        /*System.out.println("Por lo que el consumo medio en 2022 ha sido de: "+(consumo22/ lista22.size())+" kw/h");
+        mediaFiltradaHora(lista22);
+        System.out.println();
+        System.out.println("Por lo que el consumo medio en 2023 ha sido de: "+(consumo23/ lista23.size())+" kw/h");
+        mediaFiltradaHora(lista23);*/
     }
 
     private static void mediaFiltradaHora(ArrayList<Lectura> listaLecturas) {
