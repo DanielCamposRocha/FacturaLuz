@@ -18,10 +18,10 @@ public class LeerExcell {
         leerExcell();
         calcularMedia();
         mediaFiltradaAnho();
-        mediaFiltradaHora();
+
     }
 
-    private static void mediaFiltradaHora() {
+    private static void mediaFiltradaHora(ArrayList<Lectura> listaLecturas) {
 
         for(int i=0;i<24;i++){
             ArrayList <Lectura> hora=new ArrayList<>();
@@ -57,8 +57,13 @@ public class LeerExcell {
                 consumo23=consumo23+lectura.getConsumo();}
         }
         System.out.println("Por lo que el consumo medio en 2021 ha sido de: "+(consumo21/ lista21.size())+" kw/h");
+        mediaFiltradaHora(lista21);
+        System.out.println();
         System.out.println("Por lo que el consumo medio en 2022 ha sido de: "+(consumo22/ lista22.size())+" kw/h");
+        mediaFiltradaHora(lista22);
+        System.out.println();
         System.out.println("Por lo que el consumo medio en 2023 ha sido de: "+(consumo23/ lista23.size())+" kw/h");
+        mediaFiltradaHora(lista21);
     }
 
     private static void calcularMedia() {
