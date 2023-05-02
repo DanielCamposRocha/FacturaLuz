@@ -17,10 +17,27 @@ public class LeerExcell {
         listaLecturas=new ArrayList<>();
         leerExcell();
         calcularMedia();
-        mediaFiltrada();
+        mediaFiltradaAnho();
+        mediaFiltradaHora();
     }
 
-    private static void mediaFiltrada() {
+    private static void mediaFiltradaHora() {
+
+        for(int i=0;i<24;i++){
+            ArrayList <Lectura> hora=new ArrayList<>();
+            double consumo=0;
+            int contador=0;
+                for (Lectura lectura : listaLecturas) {
+                    if(lectura.getFechaContador().getHour()==i){
+                        consumo+= lectura.getConsumo();
+                        contador++;
+                    }
+                }
+            System.out.println("Por lo que el consumo medio en la hora"+i+" ha sido de: "+(consumo/ contador)+" kw/h");
+        }
+    }
+
+    private static void mediaFiltradaAnho() {
         ArrayList <Lectura> lista21=new ArrayList<>();
         ArrayList <Lectura> lista22=new ArrayList<>();
         ArrayList <Lectura> lista23=new ArrayList<>();
