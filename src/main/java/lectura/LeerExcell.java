@@ -63,7 +63,7 @@ public class LeerExcell {
         mediaFiltradaHora(lista22);
         System.out.println();
         System.out.println("Por lo que el consumo medio en 2023 ha sido de: "+(consumo23/ lista23.size())+" kw/h");
-        mediaFiltradaHora(lista21);
+        mediaFiltradaHora(lista23);
     }
 
     private static void calcularMedia() {
