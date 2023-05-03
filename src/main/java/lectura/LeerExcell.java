@@ -58,10 +58,13 @@ public class LeerExcell {
             for (Row fila : hoja) {
                 if(contadorFilas==0|contadorFilas==1){
                 }else{
-                    double id=fila.getCell(0).getNumericCellValue();
-                    String nombre=fila.getCell(1).getStringCellValue();
+                    //ni idea para que sirve este valor podriamos obivarlo queda listo por si hace falta
+                    //double id=fila.getCell(0).getNumericCellValue();
+                    //nombre del tipo de tarifa por ahora lo obviamos
+                    //String nombre=fila.getCell(1).getStringCellValue();
                     double geoid=fila.getCell(2).getNumericCellValue();
-                    String geoname=fila.getCell(3).getStringCellValue();
+                    //geoid y geoname indican el sistema electrico uno en double otro en string
+                    //String geoname=fila.getCell(3).getStringCellValue();
                     double precio=fila.getCell(4).getNumericCellValue();
                     String fecha=fila.getCell(5).getStringCellValue();
                     LocalDateTime fechL=pasarLecturaPrecio(fecha);

@@ -52,10 +52,10 @@ public class Ejecutable {
             listaAnho.clear();
             for (Lectura lectura:listaLecturas
             ) {
-            if(lectura.getFechaContador().getYear()==i){
+                if(lectura.getFechaContador().getYear()==i){
                 listaAnho.add(lectura);
                 consumoAnho=consumoAnho+lectura.getConsumo();
-            }
+                }
             }
             System.out.println("Por lo que el consumo medio en "+i+" ha sido de: "+(consumoAnho/ listaAnho.size())+" kw/h");
             mediaFiltradaHora(listaAnho);
