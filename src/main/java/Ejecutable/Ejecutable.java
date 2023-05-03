@@ -2,6 +2,7 @@ package Ejecutable;
 
 import lectura.Lectura;
 import lectura.LeerExcell;
+import lectura.Precio;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -10,13 +11,17 @@ import java.util.ArrayList;
 public class Ejecutable {
 
     public static ArrayList<Lectura> listaLecturas;
+    public static ArrayList<Precio> listaPrecios;
 
     public static void main(String[] args) {
         listaLecturas = new ArrayList<>();
-        LeerExcell.leerExcell("Lecturas264.xlsx");
+        listaPrecios=new ArrayList<>();
+       /* LeerExcell.leerExcell("Lecturas264.xlsx");
         calcularMedia();
         mediaFiltradaAnho2();
-        mediaFiltradaSemana2();
+        mediaFiltradaSemana2();*/
+        LeerExcell.leerExcellPrecios("PreciosImportadosPVPC.xlsx");
+        System.out.println(listaPrecios);
     }
 
 
