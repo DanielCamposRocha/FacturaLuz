@@ -1,5 +1,6 @@
 package Ejecutable;
 
+import escritura.EscribirCsv;
 import lectura.Lectura;
 import lectura.LeerExcell;
 import lectura.Precio;
@@ -16,12 +17,14 @@ public class Ejecutable {
     public static void main(String[] args) {
         listaLecturas = new ArrayList<>();
         listaPrecios=new ArrayList<>();
-       /* LeerExcell.leerExcell("Lecturas264.xlsx");
-        calcularMedia();
+       LeerExcell.leerExcell("Lecturas264.xlsx");
+        /*calcularMedia();
         mediaFiltradaAnho2();
         mediaFiltradaSemana2();*/
         LeerExcell.leerExcellPrecios("PreciosImportadosPVPC.xlsx");
-        System.out.println(listaPrecios);
+        EscribirCsv.EscribirPrecios();
+        EscribirCsv.EscribirLecturas();
+        System.out.println(listaLecturas);
     }
 
 
