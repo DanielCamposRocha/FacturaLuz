@@ -41,12 +41,13 @@ public class Ejecutable {
             op=m.getOption();
             switch (op) {
                 case '1' -> {
-                    int carga = -1;
+                    int carga;
                     do {
                         carga = Utilidades.pedirInt("Para importar datos de lecturas contador pulse(1), para importar datos de precios pulse (2) para salir (0)");
                     } while (carga != 1 & carga != 2 & carga != 0);
                     if (carga == 1) LeerExcell.leerExcell("Lecturas264.xlsx");
                     if (carga == 2) LeerExcell.leerExcellPrecios("PreciosImportadosPVPC.xlsx");
+                    calcularMedia();
                 }
                 case '2' -> {
                     LeerExcell.leerLecturas("ES0022000004433403RW1P.csv");
