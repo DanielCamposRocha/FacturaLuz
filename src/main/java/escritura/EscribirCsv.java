@@ -20,6 +20,7 @@ public class EscribirCsv {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("Archivo guardado correctamente");
     }
 
     public static void EscribirLecturas(){
@@ -32,5 +33,6 @@ public class EscribirCsv {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("Archivo guardado correctamente");
     }
 }

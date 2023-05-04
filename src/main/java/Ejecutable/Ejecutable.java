@@ -1,12 +1,16 @@
 package Ejecutable;
 
-import escritura.EscribirCsv;
+import consumos.ConsumosHorarios;
+import grafico.GeneraGrafico;
 import lectura.Lectura;
 import lectura.LeerExcell;
 import lectura.Precio;
+import utilidades.Menu;
+import utilidades.Utilidades;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 
 public class Ejecutable {
@@ -17,31 +21,83 @@ public class Ejecutable {
     public static void main(String[] args) {
         listaLecturas = new ArrayList<>();
         listaPrecios=new ArrayList<>();
-       LeerExcell.leerExcell("Lecturas264.xlsx");
+        menu();
+      /* LeerExcell.leerExcell("Lecturas264.xlsx");*/
         /*calcularMedia();
         mediaFiltradaAnho2();
         mediaFiltradaSemana2();*/
-        LeerExcell.leerExcellPrecios("PreciosImportadosPVPC.xlsx");
-        EscribirCsv.EscribirPrecios();
-        EscribirCsv.EscribirLecturas();
-        System.out.println(listaLecturas);
+       /* LeerExcell.leerExcellPrecios("PreciosImportadosPVPC.xlsx");
+        EscribirCsv.EscribirPrecios();*/
+        LeerExcell.leerPrecios("precios.csv");
+        /*EscribirCsv.EscribirLecturas();*/
+        System.out.println(listaPrecios);
+    }
+
+    private static void menu() {
+        char op;
+        Menu m=new Menu("Menu Principal",new String[] {"1.-Importar nuevos Datos ","2.-Cargar Listas de precios y lecturas precias","3.-Medias por años", "4.-Medias por dias de la semana","5.-Medias por meses","0.-Sair"},"012345",Menu.Direccion.VERTICAL);
+
+        do {
+            op=m.getOption();
+            switch (op) {
+                case '1' -> {
+                    int carga = -1;
+                    do {
+                        carga = Utilidades.pedirInt("Para importar datos de lecturas contador pulse(1), para importar datos de precios pulse (2) para salir (0)");
+                    } while (carga != 1 & carga != 2 & carga != 0);
+                    if (carga == 1) LeerExcell.leerExcell("Lecturas264.xlsx");
+                    if (carga == 2) LeerExcell.leerExcellPrecios("PreciosImportadosPVPC.xlsx");
+                }
+                case '2' -> {
+                    LeerExcell.leerLecturas("ES0022000004433403RW1P.csv");
+                    LeerExcell.leerPrecios("precios.csv");
+                }
+                case '3' -> mediaFiltradaAnho2();
+                case '4' -> mediaFiltradaSemana2();
+                case '5' -> mediaFiltradaMes();
+            }
+
+        } while(op!='0');
+    }
+
+    private static void mediaFiltradaMes() {
+        ArrayList<Lectura> listaMes=new ArrayList<>();
+        double consumoMes;
+
+        for (int i=1;i<=12;i++){
+            consumoMes=0;
+            listaMes.clear();
+            for (Lectura lectura:listaLecturas
+            ) {
+                if(lectura.getFechaContador().getMonthValue()==i){
+                    listaMes.add(lectura);
+                    consumoMes+=lectura.getConsumo();
+                    }
+            }
+            System.out.println("Por lo que el consumo medio en "+ Month.of(i)+" ha sido de: "+(consumoMes/ listaMes.size())+" kw/h");
+            mediaFiltradaHora(listaMes, String.valueOf(Month.of(i)));
+            System.out.println();
+        }
     }
 
 
-    private static void mediaFiltradaHora(ArrayList<Lectura> listaLecturas) {
-
+    private static void mediaFiltradaHora(ArrayList<Lectura> listaLecturas,String nombregrafico) {
+        ArrayList <ConsumosHorarios> hora=new ArrayList<>();
         for(int i=0;i<24;i++){
-            ArrayList <Lectura> hora=new ArrayList<>();
+
             double consumo=0;
             int contador=0;
             for (Lectura lectura : listaLecturas) {
                 if(lectura.getFechaContador().getHour()==i){
                     consumo+= lectura.getConsumo();
                     contador++;
+
                 }
             }
             System.out.println("Por lo que el consumo medio en la hora"+i+" ha sido de: "+(consumo/ contador)+" kw/h");
+            hora.add(new ConsumosHorarios((consumo/contador), i));
         }
+        GeneraGrafico.Creagrafico(hora,nombregrafico);
     }
 
 
@@ -61,9 +117,9 @@ public class Ejecutable {
                 }
             }
             System.out.println("Por lo que el consumo medio en "+i+" ha sido de: "+(consumoAnho/ listaAnho.size())+" kw/h");
-            mediaFiltradaHora(listaAnho);
+            mediaFiltradaHora(listaAnho,String.valueOf(i));
             System.out.println();
-        }
+            }
     }
     private static void mediaFiltradaSemana2(){
         ArrayList<Lectura> listaDiaSemana=new ArrayList<>();
@@ -79,7 +135,7 @@ public class Ejecutable {
                 }
             }
             System.out.println("Por lo que el consumo medio en "+DayOfWeek.of(i)+" ha sido de: "+(consumoDiaSemana/ listaDiaSemana.size())+" kw/h");
-            mediaFiltradaHora(listaDiaSemana);
+            mediaFiltradaHora(listaDiaSemana, String.valueOf(DayOfWeek.of(i)));
             System.out.println();
         }
     }
