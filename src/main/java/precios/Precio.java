@@ -1,6 +1,9 @@
-package lectura;
+package precios;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import static Ejecutable.Ejecutable.listaPrecios;
 
 public class Precio {
     private LocalDateTime fechaPrecio;
@@ -40,5 +43,15 @@ public class Precio {
     @Override
     public String toString() {
         return "En fecha: " + fechaPrecio +", el precio es " + precio +", en sistema " + geoid ;
+    }
+
+    public static ArrayList<Precio> preciosEntrefechas(LocalDateTime inicio, LocalDateTime Tfinal){
+        ArrayList<Precio>listaTemporalPrecios=new ArrayList<>();
+
+        for (Precio precio:listaPrecios
+        ) {
+            if(precio.getFechaPrecio().isAfter(inicio) & precio.getFechaPrecio().isBefore(Tfinal)) listaTemporalPrecios.add(precio);
+        }
+        return  listaTemporalPrecios;
     }
 }

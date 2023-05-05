@@ -1,7 +1,7 @@
-package escritura;
+package archivos;
 
 import lectura.Lectura;
-import lectura.Precio;
+import precios.Precio;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

@@ -1,10 +1,12 @@
 package Ejecutable;
 
+import Costes.CalculosConsumos;
+import Costes.GastoEnergia;
 import consumos.ConsumosHorarios;
 import grafico.GeneraGrafico;
 import lectura.Lectura;
-import lectura.LeerExcell;
-import lectura.Precio;
+import archivos.LeerExcell;
+import precios.Precio;
 import utilidades.Menu;
 import utilidades.Utilidades;
 
@@ -22,20 +24,12 @@ public class Ejecutable {
         listaLecturas = new ArrayList<>();
         listaPrecios=new ArrayList<>();
         menu();
-      /* LeerExcell.leerExcell("Lecturas264.xlsx");*/
-        /*calcularMedia();
-        mediaFiltradaAnho2();
-        mediaFiltradaSemana2();*/
-       /* LeerExcell.leerExcellPrecios("PreciosImportadosPVPC.xlsx");
-        EscribirCsv.EscribirPrecios();*/
-        LeerExcell.leerPrecios("precios.csv");
-        /*EscribirCsv.EscribirLecturas();*/
-        System.out.println(listaPrecios);
+
     }
 
     private static void menu() {
         char op;
-        Menu m=new Menu("Menu Principal",new String[] {"1.-Importar nuevos Datos ","2.-Cargar Listas de precios y lecturas precias","3.-Medias por años", "4.-Medias por dias de la semana","5.-Medias por meses","0.-Sair"},"012345",Menu.Direccion.VERTICAL);
+        Menu m=new Menu("Menu Principal",new String[] {"1.-Importar nuevos Datos ","2.-Cargar Listas de precios y lecturas precias","3.-Medias por años", "4.-Medias por dias de la semana","5.-Medias por meses","6.-Gastos anuales","0.-Sair"},"0123456",Menu.Direccion.VERTICAL);
 
         do {
             op=m.getOption();
@@ -56,9 +50,28 @@ public class Ejecutable {
                 case '3' -> mediaFiltradaAnho2();
                 case '4' -> mediaFiltradaSemana2();
                 case '5' -> mediaFiltradaMes();
+                case '6' -> gastosPoranho();
             }
 
         } while(op!='0');
+    }
+
+    private static void gastosPoranho() {
+        int anho=Utilidades.pedirInt("Introduzca año");
+        LocalDateTime inicio=LocalDateTime.of(anho-1,12,31,23,0);
+        LocalDateTime finalT=LocalDateTime.of(anho+1,1,1,0,0);
+
+        /*ArrayList<Precio>listapreciosT=Precio.preciosEntrefechas(inicio,finalT);
+        System.out.println(listapreciosT.size());
+        ArrayList<Lectura>listaLecturaT=Lectura.lecturasEntrefechas(inicio,finalT);
+        System.out.println(listaLecturaT.size());*/
+        /*ArrayList<GastoEnergia> gastosEnergia= CalculosConsumos.gastoPvpc(inicio,finalT);
+        double coste=0;
+        for (GastoEnergia gasto:gastosEnergia
+             ) {
+            coste+=gasto.getEnergia()* (gasto.getPrecio()/1000);
+        }
+        System.out.println("El coste de la energia de "+anho+" es "+coste+" €");*/
     }
 
     private static void mediaFiltradaMes() {

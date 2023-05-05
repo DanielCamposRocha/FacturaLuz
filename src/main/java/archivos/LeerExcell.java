@@ -1,6 +1,8 @@
-package lectura;
+package archivos;
 
 
+import lectura.Lectura;
+import precios.Precio;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -140,6 +142,7 @@ public class LeerExcell {
         int dia=Integer.parseInt(fecha.split("/")[0]);
         int mes=Integer.parseInt(fecha.split("/")[1]);
         int anho=Integer.parseInt(fecha.split("/")[2]);
-        return LocalDateTime.of(anho,mes,dia,horita,0);
+        LocalDateTime ajuste=LocalDateTime.of(anho,mes,dia,horita,0).plusHours(1);
+        return ajuste;
     }
 }
