@@ -2,6 +2,7 @@ package Ejecutable;
 
 import Costes.CalculosConsumos;
 import Costes.GastoEnergia;
+import archivos.EscribirCsv;
 import consumos.ConsumosHorarios;
 import grafico.GeneraGrafico;
 import lectura.Lectura;
@@ -39,9 +40,15 @@ public class Ejecutable {
                     do {
                         carga = Utilidades.pedirInt("Para importar datos de lecturas contador pulse(1), para importar datos de precios pulse (2) para salir (0)");
                     } while (carga != 1 & carga != 2 & carga != 0);
-                    if (carga == 1) LeerExcell.leerExcell("Lecturas264.xlsx");
-                    if (carga == 2) LeerExcell.leerExcellPrecios("PreciosImportadosPVPC.xlsx");
-                    calcularMedia();
+                    if (carga == 1) {
+                        LeerExcell.leerExcell("Lecturas264.xlsx");
+                        EscribirCsv.EscribirLecturas();
+                        calcularMedia();
+                    }
+                    if (carga == 2) {
+                        LeerExcell.leerExcellPrecios("PreciosImportadosPVPC.xlsx");
+                        EscribirCsv.EscribirPrecios();
+                    }
                 }
                 case '2' -> {
                     LeerExcell.leerLecturas("ES0022000004433403RW1P.csv");
@@ -60,18 +67,13 @@ public class Ejecutable {
         int anho=Utilidades.pedirInt("Introduzca año");
         LocalDateTime inicio=LocalDateTime.of(anho-1,12,31,23,0);
         LocalDateTime finalT=LocalDateTime.of(anho+1,1,1,0,0);
-
-        /*ArrayList<Precio>listapreciosT=Precio.preciosEntrefechas(inicio,finalT);
-        System.out.println(listapreciosT.size());
-        ArrayList<Lectura>listaLecturaT=Lectura.lecturasEntrefechas(inicio,finalT);
-        System.out.println(listaLecturaT.size());*/
-        /*ArrayList<GastoEnergia> gastosEnergia= CalculosConsumos.gastoPvpc(inicio,finalT);
+        ArrayList<GastoEnergia> gastosEnergia= CalculosConsumos.gastoPvpc(inicio,finalT);
         double coste=0;
         for (GastoEnergia gasto:gastosEnergia
              ) {
             coste+=gasto.getEnergia()* (gasto.getPrecio()/1000);
         }
-        System.out.println("El coste de la energia de "+anho+" es "+coste+" €");*/
+        System.out.println("El coste de la energia de "+anho+" es "+coste+" €");
     }
 
     private static void mediaFiltradaMes() {

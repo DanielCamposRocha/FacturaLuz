@@ -142,7 +142,7 @@ public class LeerExcell {
         int dia=Integer.parseInt(fecha.split("/")[0]);
         int mes=Integer.parseInt(fecha.split("/")[1]);
         int anho=Integer.parseInt(fecha.split("/")[2]);
-        LocalDateTime ajuste=LocalDateTime.of(anho,mes,dia,horita,0).plusHours(1);
+        LocalDateTime ajuste=LocalDateTime.of(anho,mes,dia,horita,0);
         return ajuste;
     }
 }
