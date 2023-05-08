@@ -30,7 +30,7 @@ public class Ejecutable {
 
     private static void menu() {
         char op;
-        Menu m=new Menu("Menu Principal",new String[] {"1.-Importar nuevos Datos ","2.-Cargar Listas de precios y lecturas precias","3.-Medias por años", "4.-Medias por dias de la semana","5.-Medias por meses","6.-Gastos anuales","0.-Sair"},"0123456",Menu.Direccion.VERTICAL);
+        Menu m=new Menu("Menu Principal",new String[] {"1.-Importar nuevos Datos ","2.-Cargar Listas de precios y lecturas precias","3.-Medias por años", "4.-Medias por dias de la semana","5.-Medias por meses","6.-Gasto energia entre dos fechas","0.-Sair"},"0123456",Menu.Direccion.VERTICAL);
 
         do {
             op=m.getOption();
@@ -57,23 +57,24 @@ public class Ejecutable {
                 case '3' -> mediaFiltradaAnho2();
                 case '4' -> mediaFiltradaSemana2();
                 case '5' -> mediaFiltradaMes();
-                case '6' -> gastosPoranho();
+                case '6' -> gastosEntrefechas();
             }
 
         } while(op!='0');
     }
 
-    private static void gastosPoranho() {
-        int anho=Utilidades.pedirInt("Introduzca año");
-        LocalDateTime inicio=LocalDateTime.of(anho-1,12,31,23,0);
-        LocalDateTime finalT=LocalDateTime.of(anho+1,1,1,0,0);
-        ArrayList<GastoEnergia> gastosEnergia= CalculosConsumos.gastoPvpc(inicio,finalT);
+    private static void gastosEntrefechas() {
+        LocalDateTime inicio=LocalDateTime.of(Utilidades.pedirInt("Introduzca año inicio"),Utilidades.pedirInt("Introduzca mes inicio"),Utilidades.pedirInt("Introduzca dia inicio"),Utilidades.pedirInt("Introduzca hora inicio"),0);
+        LocalDateTime inicio2=inicio.minusHours(1);
+        LocalDateTime finalT=LocalDateTime.of(Utilidades.pedirInt("Introduzca año final"),Utilidades.pedirInt("Introduzca mes final"),Utilidades.pedirInt("Introduzca dia final"),Utilidades.pedirInt("Introduzca hora final"),0);
+        LocalDateTime finalT2=finalT.plusHours(1);
+        ArrayList<GastoEnergia> gastosEnergia= CalculosConsumos.gastoPvpc(inicio2,finalT2);
         double coste=0;
         for (GastoEnergia gasto:gastosEnergia
              ) {
             coste+=gasto.getEnergia()* (gasto.getPrecio()/1000);
         }
-        System.out.println("El coste de la energia de "+anho+" es "+coste+" €");
+        System.out.println("El coste de la energia entr "+inicio+" y "+finalT+" es "+coste+" €");
     }
 
     private static void mediaFiltradaMes() {
