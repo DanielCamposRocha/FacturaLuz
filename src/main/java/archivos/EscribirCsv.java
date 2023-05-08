@@ -28,7 +28,7 @@ public class EscribirCsv {
         try(BufferedWriter escribe = new BufferedWriter(new FileWriter(nombre+".csv"))){
             for (Lectura lectura:listaLecturas
             ) {
-                escribe.write(lectura.getFechaContador()+","+String.valueOf(lectura.getConsumo())+","+lectura.getMetodoObtencion()+"\n");
+                escribe.write(lectura.getFechaContador()+","+ lectura.getConsumo() +","+lectura.getMetodoObtencion()+"\n");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

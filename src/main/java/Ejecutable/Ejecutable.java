@@ -3,6 +3,7 @@ package Ejecutable;
 import Costes.CalculosConsumos;
 import Costes.GastoEnergia;
 import archivos.EscribirCsv;
+import consumos.ConsumoEuros;
 import consumos.ConsumosHorarios;
 import grafico.GeneraGrafico;
 import lectura.Lectura;
@@ -75,6 +76,7 @@ public class Ejecutable {
             coste+=gasto.getEnergia()* (gasto.getPrecio()/1000);
         }
         System.out.println("El coste de la energia entr "+inicio+" y "+finalT+" es "+coste+" €");
+        mediaFiltradaHora(gastosEnergia);
     }
 
     private static void mediaFiltradaMes() {
@@ -98,6 +100,25 @@ public class Ejecutable {
     }
 
 
+    private static void mediaFiltradaHora(ArrayList<GastoEnergia> listaGastos) {
+        ArrayList <ConsumoEuros> hora=new ArrayList<>();
+        for(int i=0;i<24;i++){
+            double coste=0;
+            double consumo=0;
+            int contador=0;
+            for (GastoEnergia gasto : listaGastos) {
+                if(gasto.getFechaGasto().getHour()==i){
+                    consumo+= gasto.getEnergia();
+                    coste+=gasto.getEnergia()*(gasto.getPrecio()/1000);
+                    contador++;
+
+                }
+            }
+            System.out.println("Por lo que el consumo medio en la hora"+i+" ha sido de: "+(coste/ contador)+" €/h");
+            hora.add(new ConsumoEuros((coste/contador), i,(consumo/contador)));
+        }
+        GeneraGrafico.graficoCosteEnergia(hora);
+    }
     private static void mediaFiltradaHora(ArrayList<Lectura> listaLecturas,String nombregrafico) {
         ArrayList <ConsumosHorarios> hora=new ArrayList<>();
         for(int i=0;i<24;i++){
@@ -116,7 +137,6 @@ public class Ejecutable {
         }
         GeneraGrafico.Creagrafico(hora,nombregrafico);
     }
-
 
     private static void mediaFiltradaAnho2(){
         ArrayList<Lectura> listaAnho=new ArrayList<>();

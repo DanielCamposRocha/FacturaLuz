@@ -28,8 +28,7 @@ public class LeerExcell {
             XSSFSheet hoja = libro.getSheetAt(0);
             int contadorFilas=0;
             for (Row fila : hoja) {
-                if(contadorFilas==0){
-                }else{
+                if(contadorFilas!=0){
                     String numContador=fila.getCell(0).getStringCellValue();
                     String fecha=fila.getCell(1).getStringCellValue();
                     Double hora=fila.getCell(2).getNumericCellValue();
@@ -95,8 +94,6 @@ public class LeerExcell {
                 double sistemaD=Double.parseDouble(sistema);
                 listatemporaPrecios.add(new Precio(fechaT,precio,sistemaD));
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -119,8 +116,6 @@ public class LeerExcell {
 
                 listatemporaLecturas.add(new Lectura(contador,fechaT,lecturaD,metodo));
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -142,7 +137,6 @@ public class LeerExcell {
         int dia=Integer.parseInt(fecha.split("/")[0]);
         int mes=Integer.parseInt(fecha.split("/")[1]);
         int anho=Integer.parseInt(fecha.split("/")[2]);
-        LocalDateTime ajuste=LocalDateTime.of(anho,mes,dia,horita,0);
-        return ajuste;
+        return LocalDateTime.of(anho,mes,dia,horita,0);
     }
 }
