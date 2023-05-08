@@ -70,7 +70,7 @@ public class GeneraGrafico {
         CategoryAxis domainAxis = plot.getDomainAxis();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         domainAxis.setLabel("Horas");
-        rangeAxis.setLabel("Energia-Coste");
+        rangeAxis.setLabel("Gasto (€) Energia Kw/h");
 
         ChartFrame frame = new ChartFrame("Chart", chart);
         frame.pack();
