@@ -2,7 +2,6 @@ package grafico;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import Costes.GastoEnergia;
 import consumos.ConsumoEuros;
 import consumos.ConsumosHorarios;
 import org.jfree.chart.ChartFactory;
@@ -18,7 +17,7 @@ public class GeneraGrafico {
     public static void Creagrafico(ArrayList<ConsumosHorarios> lista, String nombreGrafico){
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (int i = 0; i < lista.size(); i++) {
-            dataset.addValue(lista.get(i).getConsumo(), "Values", Integer.toString(i + 1));
+            dataset.addValue(lista.get(i).getConsumoEA(), "Values", Integer.toString(i + 1));
         }
 
         JFreeChart chart = ChartFactory.createLineChart(
@@ -49,7 +48,7 @@ public class GeneraGrafico {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (int i = 0; i < gastos.size(); i++) {
-            dataset.addValue(gastos.get(i).getConsumo(), "Gasto", Integer.toString(i + 1));
+            dataset.addValue(gastos.get(i).getConsumoEA(), "Gasto", Integer.toString(i + 1));
             dataset.addValue(gastos.get(i).getEnergia(), "Energia", Integer.toString(i + 1));
         }
 

@@ -1,20 +1,20 @@
 package consumos;
 
 public class ConsumosHorarios {
-    private Double consumo;
+    private Double consumoEA;
     private int hora;
 
-    public ConsumosHorarios(Double consumo, int hora) {
-        this.consumo = consumo;
+    public ConsumosHorarios(Double consumoEA, int hora) {
+        this.consumoEA = consumoEA;
         this.hora = hora;
     }
 
-    public Double getConsumo() {
-        return consumo;
+    public Double getConsumoEA() {
+        return consumoEA;
     }
 
-    public void setConsumo(Double consumo) {
-        this.consumo = consumo;
+    public void setConsumoEA(Double consumoEA) {
+        this.consumoEA = consumoEA;
     }
 
     public int getHora() {
@@ -27,6 +27,6 @@ public class ConsumosHorarios {
 
     @Override
     public String toString() {
-        return "consumo: " + consumo +", hora: " + hora ;
+        return "consumo energia activa: " + consumoEA +", hora: " + hora ;
     }
 }

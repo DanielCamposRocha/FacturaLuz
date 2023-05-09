@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import static Ejecutable.Ejecutable.listaLecturas;
 
 public class Lectura {
-    private String numContador;
-    private LocalDateTime fechaContador;
-    private Double consumo;
-    private String metodoObtencion;
+    private final String numContador;
+    private final LocalDateTime fechaContador;
+    private final Double consumo;
+    private final String metodoObtencion;
 
     public Lectura(String numContador, LocalDateTime fechaContador, Double consumo, String metodoObtencion) {
         this.numContador = numContador;
@@ -22,32 +22,17 @@ public class Lectura {
         return numContador;
     }
 
-    public void setNumContador(String numContador) {
-        this.numContador = numContador;
-    }
 
     public LocalDateTime getFechaContador() {
         return fechaContador;
-    }
-
-    public void setFechaContador(LocalDateTime fechaContador) {
-        this.fechaContador = fechaContador;
     }
 
     public Double getConsumo() {
         return consumo;
     }
 
-    public void setConsumo(Double consumo) {
-        this.consumo = consumo;
-    }
-
     public String getMetodoObtencion() {
         return metodoObtencion;
-    }
-
-    public void setMetodoObtencion(String metodoObtencion) {
-        this.metodoObtencion = metodoObtencion;
     }
 
     @Override

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import static Ejecutable.Ejecutable.listaPrecios;
 
 public class Precio {
-    private LocalDateTime fechaPrecio;
-    private Double precio;
-    private Double geoid;
+    private final LocalDateTime fechaPrecio;
+    private final Double precio;
+    private final Double geoid;
 
     public Precio(LocalDateTime fechaPrecio, Double precio, Double geoid) {
         this.fechaPrecio = fechaPrecio;
@@ -20,24 +20,12 @@ public class Precio {
         return fechaPrecio;
     }
 
-    public void setFechaPrecio(LocalDateTime fechaPrecio) {
-        this.fechaPrecio = fechaPrecio;
-    }
-
     public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
     public Double getGeoid() {
         return geoid;
-    }
-
-    public void setGeoid(Double geoid) {
-        this.geoid = geoid;
     }
 
     @Override

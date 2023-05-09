@@ -2,4 +2,9 @@ La idea de este proyecto es crear un pequeño programa que se encargue de leer l
 
 Por ahora se importan los datos solo desde el formato .xlsx esta pendiente importacion del formato .csv como usa la CNMC
 
-Calculo de media de consumos solo se realiza por año, pendiente cambiar opciones como mes dias de la semana o periodos de tiempo.
+Calculo de media de consumos se realiza por año, mes y dia de la semana, todas ellas por horas.
+dando lugar cada uno de ellos a un grafico simple para su mejor valoración.
+
+El calculo de costes solo se aplica por ahora a la energia activa pudiendo seleccionarse
+los intervalos de tiempo que se consideren oportunos (los datos disponibles por ahora son desde 21/6/2021 hasta 26/04/2023)
+
