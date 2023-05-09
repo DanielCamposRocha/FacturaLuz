@@ -13,8 +13,8 @@ public class CalculosConsumos {
         ArrayList<Lectura>listaTemporalLecturas=Lectura.lecturasEntrefechas(inicio, Tfinal);
         ArrayList<Precio>listaTemporalPrecios=Precio.preciosEntrefechas(inicio, Tfinal);
         for(int i=0; i<listaTemporalLecturas.size();i++){
-            if(listaTemporalLecturas.get(i).getFechaContador().equals(listaTemporalPrecios.get(i).getFechaPrecio())){
-                listaCoste.add(new GastoEnergia(listaTemporalLecturas.get(i).getConsumo(),listaTemporalPrecios.get(i).getPrecio(),listaTemporalLecturas.get(i).getFechaContador()));
+            if(listaTemporalLecturas.get(i).fechaContador().equals(listaTemporalPrecios.get(i).fechaPrecio())){
+                listaCoste.add(new GastoEnergia(listaTemporalLecturas.get(i).consumo(),listaTemporalPrecios.get(i).precio(),listaTemporalLecturas.get(i).fechaContador()));
             }
         }
         return listaCoste;

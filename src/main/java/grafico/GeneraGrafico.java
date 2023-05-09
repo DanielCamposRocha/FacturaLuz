@@ -1,5 +1,6 @@
 package grafico;
 import java.awt.Color;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import consumos.ConsumoEuros;
@@ -17,7 +18,7 @@ public class GeneraGrafico {
     public static void Creagrafico(ArrayList<ConsumosHorarios> lista, String nombreGrafico){
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (int i = 0; i < lista.size(); i++) {
-            dataset.addValue(lista.get(i).getConsumoEA(), "Values", Integer.toString(i + 1));
+            dataset.addValue(lista.get(i).consumoEA(), "Values", Integer.toString(i + 1));
         }
 
         JFreeChart chart = ChartFactory.createLineChart(
@@ -44,16 +45,16 @@ public class GeneraGrafico {
         frame.setVisible(true);
     }
 
-    public static void graficoCosteEnergia(ArrayList<ConsumoEuros> gastos){
+    public static void graficoCosteEnergia(ArrayList<ConsumoEuros> gastos, LocalDateTime inicio,LocalDateTime finalT,double coste){
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (int i = 0; i < gastos.size(); i++) {
-            dataset.addValue(gastos.get(i).getConsumoEA(), "Gasto", Integer.toString(i + 1));
-            dataset.addValue(gastos.get(i).getEnergia(), "Energia", Integer.toString(i + 1));
+            dataset.addValue(gastos.get(i).consumoEA(), "Gasto", Integer.toString(i + 1));
+            dataset.addValue(gastos.get(i).energia(), "Energia", Integer.toString(i + 1));
         }
 
         JFreeChart chart = ChartFactory.createLineChart(
-                "Gasto en el periodo seleccionado", // Título del gráfico
+                "Entre "+inicio+" y "+finalT+" has gastado "+coste+" €", // Título del gráfico
                 "Horas", // Etiqueta del eje X
                 "Gasto (€) Energia Kw/h", // Etiqueta del eje Y
                 dataset, // Datos del gráfico

@@ -31,7 +31,7 @@ public class Ejecutable {
 
     private static void menu() {
         char op;
-        Menu m=new Menu("Menu Principal",new String[] {"1.-Importar nuevos Datos ","2.-Cargar Listas de precios y lecturas precias","3.-Medias por años", "4.-Medias por dias de la semana","5.-Medias por meses","6.-Gasto energia entre dos fechas","0.-Sair"},"0123456",Menu.Direccion.VERTICAL);
+        Menu m=new Menu("Menu Principal",new String[] {"1.-Importar nuevos Datos ","2.-Cargar Listas de precios y lecturas precias","3.-Medias energia consumida por años", "4.-Medias energia consumida por dias de la semana","5.-Medias energia consumida por meses","6.-Gasto energia activa entre dos fechas","0.-Sair"},"0123456",Menu.Direccion.VERTICAL);
 
         do {
             op=m.getOption();
@@ -65,18 +65,28 @@ public class Ejecutable {
     }
 
     private static void gastosEntrefechas() {
-        LocalDateTime inicio=LocalDateTime.of(Utilidades.pedirInt("Introduzca año inicio"),Utilidades.pedirInt("Introduzca mes inicio"),Utilidades.pedirInt("Introduzca dia inicio"),Utilidades.pedirInt("Introduzca hora inicio"),0);
-        LocalDateTime inicio2=inicio.minusHours(1);
-        LocalDateTime finalT=LocalDateTime.of(Utilidades.pedirInt("Introduzca año final"),Utilidades.pedirInt("Introduzca mes final"),Utilidades.pedirInt("Introduzca dia final"),Utilidades.pedirInt("Introduzca hora final"),0);
-        LocalDateTime finalT2=finalT.plusHours(1);
+        int c;
+        LocalDateTime inicio,inicio2,finalT,finalT2;
+        do{
+            c=0;
+            inicio=LocalDateTime.of(Utilidades.pedirInt("Introduzca año inicio"),Utilidades.pedirInt("Introduzca mes inicio"),Utilidades.pedirInt("Introduzca dia inicio"),Utilidades.pedirInt("Introduzca hora inicio"),0);
+            inicio2=inicio.minusHours(1);
+            finalT=LocalDateTime.of(Utilidades.pedirInt("Introduzca año final"),Utilidades.pedirInt("Introduzca mes final"),Utilidades.pedirInt("Introduzca dia final"),Utilidades.pedirInt("Introduzca hora final"),0);
+            finalT2=finalT.plusHours(1);
+            if(inicio.isAfter(finalT)){
+                c++;
+                System.out.println("La facha final debe ser mayor que la de inicio");
+                System.out.println("reintroduzca datos correctamente por favor");
+            }
+        }while (c!=0);
         ArrayList<GastoEnergia> gastosEnergia= CalculosConsumos.gastoPvpc(inicio2,finalT2);
         double coste=0;
         for (GastoEnergia gasto:gastosEnergia
              ) {
-            coste+=gasto.getEnergia()* (gasto.getPrecio()/1000);
+            coste+=gasto.energia()* (gasto.precio()/1000);
         }
-        System.out.println("El coste de la energia entr "+inicio+" y "+finalT+" es "+coste+" €");
-        mediaFiltradaHora(gastosEnergia);
+        System.out.println("El coste de la energia entre "+inicio+" y "+finalT+" es "+coste+" €");
+        mediaFiltradaHora(gastosEnergia,inicio,finalT,coste);
     }
 
     private static void mediaFiltradaMes() {
@@ -88,9 +98,9 @@ public class Ejecutable {
             listaMes.clear();
             for (Lectura lectura:listaLecturas
             ) {
-                if(lectura.getFechaContador().getMonthValue()==i){
+                if(lectura.fechaContador().getMonthValue()==i){
                     listaMes.add(lectura);
-                    consumoMes+=lectura.getConsumo();
+                    consumoMes+=lectura.consumo();
                     }
             }
             System.out.println("Por lo que el consumo medio en "+ Month.of(i)+" ha sido de: "+(consumoMes/ listaMes.size())+" kw/h");
@@ -100,16 +110,16 @@ public class Ejecutable {
     }
 
 
-    private static void mediaFiltradaHora(ArrayList<GastoEnergia> listaGastos) {
+    private static void mediaFiltradaHora(ArrayList<GastoEnergia> listaGastos, LocalDateTime inicio, LocalDateTime finalT,double gastoEnergia) {
         ArrayList <ConsumoEuros> hora=new ArrayList<>();
         for(int i=0;i<24;i++){
             double coste=0;
             double consumo=0;
             int contador=0;
             for (GastoEnergia gasto : listaGastos) {
-                if(gasto.getFechaGasto().getHour()==i){
-                    consumo+= gasto.getEnergia();
-                    coste+=gasto.getEnergia()*(gasto.getPrecio()/1000);
+                if(gasto.fechaGasto().getHour()==i){
+                    consumo+= gasto.energia();
+                    coste+=gasto.energia()*(gasto.precio()/1000);
                     contador++;
 
                 }
@@ -117,7 +127,7 @@ public class Ejecutable {
             System.out.println("Por lo que el consumo medio en la hora"+i+" ha sido de: "+(coste/ contador)+" €/h");
             hora.add(new ConsumoEuros((coste/contador), i,(consumo/contador)));
         }
-        GeneraGrafico.graficoCosteEnergia(hora);
+        GeneraGrafico.graficoCosteEnergia(hora,inicio,finalT,gastoEnergia);
     }
     private static void mediaFiltradaHora(ArrayList<Lectura> listaLecturas,String nombregrafico) {
         ArrayList <ConsumosHorarios> hora=new ArrayList<>();
@@ -126,8 +136,8 @@ public class Ejecutable {
             double consumo=0;
             int contador=0;
             for (Lectura lectura : listaLecturas) {
-                if(lectura.getFechaContador().getHour()==i){
-                    consumo+= lectura.getConsumo();
+                if(lectura.fechaContador().getHour()==i){
+                    consumo+= lectura.consumo();
                     contador++;
 
                 }
@@ -141,16 +151,16 @@ public class Ejecutable {
     private static void mediaFiltradaAnho2(){
         ArrayList<Lectura> listaAnho=new ArrayList<>();
         double consumoAnho;
-        int anhoInicial=listaLecturas.get(0).getFechaContador().getYear();
+        int anhoInicial=listaLecturas.get(0).fechaContador().getYear();
         int anhoFinal= LocalDateTime.now().getYear();
         for (int i=anhoInicial;i<=anhoFinal;i++){
             consumoAnho=0;
             listaAnho.clear();
             for (Lectura lectura:listaLecturas
             ) {
-                if(lectura.getFechaContador().getYear()==i){
+                if(lectura.fechaContador().getYear()==i){
                 listaAnho.add(lectura);
-                consumoAnho=consumoAnho+lectura.getConsumo();
+                consumoAnho=consumoAnho+lectura.consumo();
                 }
             }
             System.out.println("Por lo que el consumo medio en "+i+" ha sido de: "+(consumoAnho/ listaAnho.size())+" kw/h");
@@ -166,9 +176,9 @@ public class Ejecutable {
             consumoDiaSemana=0;
             for (Lectura lectura:listaLecturas
             ) {
-                if (lectura.getFechaContador().getDayOfWeek().getValue() == i) {
+                if (lectura.fechaContador().getDayOfWeek().getValue() == i) {
                     listaDiaSemana.add(lectura);
-                    consumoDiaSemana += lectura.getConsumo();
+                    consumoDiaSemana += lectura.consumo();
                 }
             }
             System.out.println("Por lo que el consumo medio en "+DayOfWeek.of(i)+" ha sido de: "+(consumoDiaSemana/ listaDiaSemana.size())+" kw/h");
@@ -180,7 +190,7 @@ public class Ejecutable {
         double consumo=0;
         for (Lectura lectura:listaLecturas
         ) {
-            consumo=consumo+lectura.getConsumo();
+            consumo=consumo+lectura.consumo();
         }
         System.out.println("El consumo total ha sido: "+consumo+" kw/h a lo largo de "+listaLecturas.size()+" horas");
         System.out.println("Por lo que el consumo medio ha sido de: "+(consumo/ listaLecturas.size())+" kw/h");
