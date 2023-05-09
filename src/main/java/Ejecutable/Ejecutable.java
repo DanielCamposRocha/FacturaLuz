@@ -63,7 +63,7 @@ public class Ejecutable {
 
         } while(op!='0');
     }
-
+//hay diferencias de coste con la cnmc por los redondeos, al grafico se envia la adecuada al cnmc
     private static void gastosEntrefechas() {
         int c;
         LocalDateTime inicio,inicio2,finalT,finalT2;
@@ -85,8 +85,10 @@ public class Ejecutable {
              ) {
             coste+=gasto.energia()* (gasto.precio()/1000);
         }
+        double cosR=coste*100;
+        double costeRedondeo=Math.round(cosR);
         System.out.println("El coste de la energia entre "+inicio+" y "+finalT+" es "+coste+" €");
-        mediaFiltradaHora(gastosEnergia,inicio,finalT,coste);
+        mediaFiltradaHora(gastosEnergia,inicio,finalT,costeRedondeo/100);
     }
 
     private static void mediaFiltradaMes() {
