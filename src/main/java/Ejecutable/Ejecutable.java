@@ -36,7 +36,7 @@ public class Ejecutable {
                         carga = Utilidades.pedirInt("Para importar datos de lecturas contador pulse(1), para importar datos de precios pulse (2) para salir (0)");
                     } while (carga != 1 & carga != 2 & carga != 0);
                     if (carga == 1) {
-                        LeerExcell.leerExcell("Lecturas264.xlsx");
+                        LeerExcell.leerExcell(Utilidades.pedirString("Introduzca nombre del archivo con su extension: "));
                         EscribirCsv.EscribirLecturas();
                         ConsumosMedios.calcularMedia();
                     }
