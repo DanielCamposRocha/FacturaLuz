@@ -1,6 +1,6 @@
 package consumos;
 
-public record ConsumoEuros(Double consumoEA, int hora, Double energia) {
+public record ConsumoEuros(double consumoEA, int hora, Double energia) {
 
     @Override
     public String toString() {
